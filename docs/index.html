@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="GUIDER learns guideline-adherent clinical reasoning with latent decision-flow rewards.">
+  <meta property="og:title" content="GUIDER — Latent Decision Flow Rewards for Clinical Guideline Reasoning">
+  <meta property="og:description" content="Joint controller–policy optimization for accurate, guideline-adherent clinical reasoning.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/method.png">
+  <title>GUIDER — Clinical Guideline Reasoning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,500;6..72,600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="nav-wrap">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="wordmark" href="#top" aria-label="GUIDER home"><span>G</span>GUIDER</a>
+      <div class="nav-links">
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#citation">Citation</a>
+      </div>
+      <a class="nav-code" href="https://github.com/mims-harvard/GUIDER">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero section-shell">
+      <div class="eyebrow"><span class="pulse"></span> Clinical reasoning · Reinforcement learning</div>
+      <h1>Latent Decision Flow Rewards for <em>Clinical Guideline Reasoning</em></h1>
+      <p class="dek">GUIDER teaches language models to reason along clinically valid decision flows—without requiring access to guidelines at inference time.</p>
+
+      <div class="authors" aria-label="Authors">
+        <a href="mailto:gaurav_bhatt@hms.harvard.edu">Gaurav Bhatt</a>
+        <span class="author-sep">·</span>
+        <a href="https://zitniklab.hms.harvard.edu/">Marinka Zitnik</a>
+      </div>
+      <p class="affiliation">Harvard University</p>
+
+      <div class="actions">
+        <a class="button primary" href="assets/ICLR_27_preprint.pdf">Read the paper <span aria-hidden="true">↗</span></a>
+        <a class="button secondary" href="https://github.com/mims-harvard/GUIDER">View code <span aria-hidden="true">↗</span></a>
+      </div>
+
+      <div class="hero-grid" aria-label="Headline results">
+        <article><strong>82.5</strong><span>Weighted accuracy<br>on MedGUIDE</span></article>
+        <article><strong>73.5</strong><span>Guideline adherence<br>on MedGUIDE</span></article>
+        <article><strong>4</strong><span>Clinical reasoning<br>benchmarks</span></article>
+        <article><strong>0</strong><span>Guidelines required<br>at inference</span></article>
+      </div>
+    </section>
+
+    <section class="problem band" id="problem">
+      <div class="section-shell split">
+        <div class="section-heading">
+          <p class="kicker">The challenge</p>
+          <h2>A correct answer does not reveal the path taken to reach it.</h2>
+        </div>
+        <div class="problem-copy">
+          <article>
+            <span class="index">01</span>
+            <div><h3>Path–answer gap</h3><p>A guideline-consistent decision flow does not necessarily determine the correct patient-specific answer. Process validity and outcome correctness are complementary—not interchangeable.</p></div>
+          </article>
+          <article>
+            <span class="index">02</span>
+            <div><h3>Path multiplicity</h3><p>Several clinically valid decision flows can support the same decision. Scoring against one fixed reference path can penalize equally sound alternatives.</p></div>
+          </article>
+        </div>
+      </div>
+      <div class="section-shell figure-card">
+        <img src="assets/decision-flows.png" alt="Examples of multiple guideline decision flows and the path-answer gap" loading="lazy">
+        <p>Distinct clinical decision flows can support the same answer, while no single flow necessarily specifies the complete answer.</p>
+      </div>
+    </section>
+
+    <section class="method section-shell" id="method">
+      <div class="section-heading centered">
+        <p class="kicker">The approach</p>
+        <h2>Supervise the process. Preserve the policy’s independence.</h2>
+        <p>GUIDER jointly optimizes a decision-flow controller and a clinical reasoning policy. The controller proposes multiple plausible flows; the policy independently generates its own flow and final answer.</p>
+      </div>
+
+      <div class="method-figure">
+        <img src="assets/method.png" alt="Overview of the GUIDER controller-policy training framework" loading="lazy">
+      </div>
+
+      <div class="steps">
+        <article><span>1</span><h3>Generate</h3><p>A controller learns from guideline-derived supervision and samples multiple plausible latent decision flows.</p></article>
+        <article><span>2</span><h3>Aggregate</h3><p>Score-weighted Monte Carlo aggregation rewards agreement across valid alternatives instead of one oracle trajectory.</p></article>
+        <article><span>3</span><h3>Gate</h3><p>Process credit is granted only when the policy’s final answer is correct, bridging process validity and clinical outcome.</p></article>
+        <article><span>4</span><h3>Optimize jointly</h3><p>The supervision evolves with the policy, while the policy never observes controller flows or guidelines at inference.</p></article>
+      </div>
+    </section>
+
+    <section class="results band" id="results">
+      <div class="section-shell">
+        <div class="section-heading result-heading">
+          <div><p class="kicker">Evaluation</p><h2>Stronger reasoning in domain—and beyond it.</h2></div>
+          <p>Across two model families, GUIDER improves both answer accuracy and guideline adherence over CRPO, FaithMed, and MRPO.</p>
+        </div>
+
+        <div class="scoreboard" aria-label="Qwen3-14B benchmark results">
+          <div class="score-head"><span>Benchmark</span><span>GUIDER</span><span>Best baseline</span><span>Gain</span></div>
+          <div class="score-row"><span><b>MedGUIDE</b><small>Weighted accuracy</small></span><strong>82.5</strong><span>79.2</span><em>+3.3</em></div>
+          <div class="score-row"><span><b>MedGUIDE</b><small>Guideline adherence</small></span><strong>73.5</strong><span>70.4</span><em>+3.1</em></div>
+          <div class="score-row"><span><b>AMEGA-LLM</b><small>Aggregate score</small></span><strong>22.3</strong><span>21.9</span><em>+0.4</em></div>
+          <div class="score-row"><span><b>RealMedQA</b><small>Judge score</small></span><strong>1.9</strong><span>1.8</span><em>+0.1</em></div>
+          <div class="score-row"><span><b>CancerGUIDE</b><small>Judge score</small></span><strong>2.4</strong><span>2.3</span><em>+0.1</em></div>
+        </div>
+        <p class="table-note">Qwen3-14B results. Fine-tuned methods are averaged over three random seeds; higher is better.</p>
+      </div>
+    </section>
+
+    <section class="takeaways section-shell">
+      <p class="kicker">What we learn</p>
+      <div class="takeaway-grid">
+        <h2>Clinical guidelines can provide rich process supervision without becoming an inference-time dependency.</h2>
+        <ul>
+          <li>Multiple sampled flows capture useful path diversity; gains largely saturate at four flows.</li>
+          <li>Moderately sized decision flows offer enough structure without unnecessary complexity.</li>
+          <li>Improvements transfer across MedGUIDE, AMEGA-LLM, RealMedQA, and CancerGUIDE.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="citation band" id="citation">
+      <div class="section-shell citation-grid">
+        <div><p class="kicker">Citation</p><h2>Build on GUIDER.</h2><p>Code, training scripts, dependencies, and evaluation templates are available in the public repository.</p></div>
+        <div class="code-block">
+          <button id="copy-citation" type="button" aria-label="Copy BibTeX citation">Copy</button>
+          <pre><code id="bibtex">@misc{bhatt2026guider,
+  title   = {Latent Decision Flow Rewards for Clinical Guideline Reasoning},
+  author  = {Bhatt, Gaurav and Zitnik, Marinka},
+  year    = {2026},
+  note    = {Preprint}
+}</code></pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="section-shell footer-inner">
+      <p><strong>GUIDER</strong><br>Guideline-Informed Decision Flow Rewards</p>
+      <p>Research use only. GUIDER has not been validated for clinical use.</p>
+      <p><a href="https://zitniklab.hms.harvard.edu/">Zitnik Lab</a> · Harvard University</p>
+    </div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
