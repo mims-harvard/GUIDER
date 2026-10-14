@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,500;6..72,600&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
   <header class="nav-wrap">
@@ -157,6 +157,46 @@
           </div>
         </div>
         <p class="example-caption"><strong>Example clinical question and generated decision flow from MedGUIDE.</strong> The generated flow identifies the relevant guideline conditions and arrives at the correct treatment recommendation as a concise sequence of decision states.</p>
+      </div>
+
+      <div class="clinical-example amega-example" aria-labelledby="amega-example-title">
+        <div class="example-heading">
+          <div>
+            <p class="kicker">Open-ended illustration</p>
+            <h2 id="amega-example-title">Reasoning without predefined answer choices.</h2>
+          </div>
+          <p>AMEGA-LLM evaluates free-form clinical answers. The model must identify patient-specific factors and compose the final response directly.</p>
+        </div>
+
+        <div class="amega-board">
+          <article class="amega-prompt">
+            <div class="card-label"><span>01</span> Patient case</div>
+            <p>A 65-year-old African American man presents with six months of worsening urinary symptoms, including weak stream, frequency, nocturia, and difficulty initiating urination. He recently developed mild pelvic discomfort and occasional hematuria. He has a history of vasectomy and benign prostatic hyperplasia. His father was diagnosed with prostate cancer at age 74.</p>
+            <div class="question-box">
+              <span>AMEGA question</span>
+              <strong>What are significant risk factors for the primary working diagnosis obtainable from the case?</strong>
+            </div>
+          </article>
+
+          <article class="amega-response">
+            <div class="card-label"><span>02</span> Model response</div>
+            <p>Significant risk factors for the primary working diagnosis of prostate cancer include:</p>
+            <ol class="risk-list">
+              <li><span>Age over 65 years</span></li>
+              <li><span>African American ethnicity</span></li>
+              <li><span>Family history of prostate cancer <small>father diagnosed at age 74</small></span></li>
+              <li><span>Presence of hematuria</span></li>
+              <li><span>Presence of pelvic pain</span></li>
+              <li><span>History of vasectomy</span></li>
+              <li><span>History of benign prostatic hyperplasia</span></li>
+            </ol>
+            <div class="response-summary">
+              <p>The patient's age, ethnicity, and family history place him in a high-risk group for prostate cancer. The presence of hematuria and pelvic pain raises concern for a more aggressive disease course. The history of vasectomy is a known risk factor for prostate cancer. His BPH history may complicate the interpretation of prostate-related symptoms.</p>
+              <p><strong>Proposed next step:</strong> PSA testing, digital rectal examination, and consideration of prostate MRI if PSA or DRE findings are abnormal.</p>
+            </div>
+          </article>
+        </div>
+        <p class="example-caption"><strong>Example open-ended clinical reasoning question and model response from AMEGA-LLM.</strong> Unlike MedGUIDE, AMEGA-LLM has no predefined answer choices. The generated clinical reasoning therefore forms the final response rather than a separate decision flow and multiple-choice answer.</p>
       </div>
     </section>
 
