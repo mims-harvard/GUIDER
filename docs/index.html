@@ -12,13 +12,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,500;6..72,600&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
   <header class="nav-wrap">
     <nav class="nav" aria-label="Main navigation">
       <a class="wordmark" href="#top" aria-label="GUIDER home"><span>G</span>GUIDER</a>
       <div class="nav-links">
+        <a href="#abstract">Abstract</a>
         <a href="#method">Method</a>
         <a href="#results">Results</a>
         <a href="#citation">Citation</a>
@@ -29,27 +30,47 @@
 
   <main id="top">
     <section class="hero section-shell">
-      <div class="eyebrow"><span class="pulse"></span> Clinical reasoning · Reinforcement learning</div>
-      <h1>Latent Decision Flow Rewards for <em>Clinical Guideline Reasoning</em></h1>
-      <p class="dek">GUIDER teaches language models to reason along clinically valid decision flows—without requiring access to guidelines at inference time.</p>
-
-      <div class="authors" aria-label="Authors">
-        <a href="mailto:gaurav_bhatt@hms.harvard.edu">Gaurav Bhatt</a>
-        <span class="author-sep">·</span>
-        <a href="https://zitniklab.hms.harvard.edu/">Marinka Zitnik</a>
+      <div class="hero-layout">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="pulse"></span> Clinical reasoning · Reinforcement learning</p>
+          <h1>Latent Decision Flow Rewards for Clinical Guideline Reasoning</h1>
+          <p class="authors" aria-label="Authors">
+            <a href="mailto:gaurav_bhatt@hms.harvard.edu">Gaurav Bhatt</a><sup>1</sup>,
+            <a href="https://zitniklab.hms.harvard.edu/">Marinka Zitnik</a><sup>1</sup>
+          </p>
+          <p class="affiliation"><sup>1</sup>Harvard University</p>
+          <div class="actions">
+            <a class="button primary" href="assets/ICLR_27_preprint.pdf">Paper</a>
+            <a class="button secondary" href="https://github.com/mims-harvard/GUIDER">Code</a>
+            <a class="button secondary" href="#citation">BibTeX</a>
+          </div>
+          <p class="dek">Clinical guidelines encode evidence-based recommendations as conditional decision flows. GUIDER learns to use these flows as process supervision for accurate, guideline-adherent clinical reasoning—without requiring guidelines at inference time.</p>
+        </div>
+        <figure class="hero-figure">
+          <img src="assets/method.png?v=2f20669" alt="Overview of the GUIDER controller-policy training framework">
+          <figcaption>GUIDER jointly optimizes a decision-flow controller and a clinical reasoning policy.</figcaption>
+        </figure>
       </div>
-      <p class="affiliation">Harvard University</p>
 
-      <div class="actions">
-        <a class="button primary" href="assets/ICLR_27_preprint.pdf">Read the paper <span aria-hidden="true">↗</span></a>
-        <a class="button secondary" href="https://github.com/mims-harvard/GUIDER">View code <span aria-hidden="true">↗</span></a>
-      </div>
-
-      <div class="hero-grid" aria-label="Headline results">
+      <div class="hero-stats" aria-label="Headline results">
         <article><strong>82.5</strong><span>Weighted accuracy<br>on MedGUIDE</span></article>
         <article><strong>73.5</strong><span>Guideline adherence<br>on MedGUIDE</span></article>
         <article><strong>4</strong><span>Clinical reasoning<br>benchmarks</span></article>
         <article><strong>0</strong><span>Guidelines required<br>at inference</span></article>
+      </div>
+    </section>
+
+    <section class="abstract band" id="abstract">
+      <div class="section-shell abstract-grid">
+        <div>
+          <p class="kicker">Abstract</p>
+          <h2>Learning guideline-adherent reasoning from latent decision flows.</h2>
+        </div>
+        <div class="abstract-copy">
+          <p>Clinical practice guidelines encode evidence-based recommendations as conditional decision flows, which makes them a natural source of process supervision for training language models. Using this supervision is difficult for two reasons. A decision flow consistent with a guideline does not by itself determine the correct answer for a given patient, which we refer to as the <em>path–answer gap</em>, and several valid decision flows can support the same clinical decision, which we refer to as <em>path multiplicity</em>. Under these conditions, answer rewards provide no signal about the decision process, supervised training on annotated flows constrains the model to a single trajectory and reduces answer accuracy, and process rewards computed against one reference flow penalize alternative valid reasoning.</p>
+          <p>We introduce <strong>GUIDER</strong>, a joint controller–policy optimization approach that learns guideline-adherent clinical reasoning while accounting for these challenges. The controller learns to generate plausible decision flows from guideline-derived supervision and provides process-level supervision to the policy, while the policy learns to generate clinical reasoning and final decisions. By aggregating process rewards over multiple controller-generated decision flows, GUIDER accounts for path multiplicity, and by gating process rewards on answer correctness, it couples guideline adherence with correct final answers. Joint optimization allows process supervision to evolve with the policy instead of relying on a fixed reference trajectory. The policy is never conditioned on an oracle decision path, so GUIDER requires no access to guidelines at inference time.</p>
+          <p>On MedGUIDE, GUIDER with Qwen3-14B achieves 82.5 weighted accuracy and 73.5 guideline adherence, improving over the strongest clinical reinforcement learning baseline by 3.3 and 3.1 points, respectively. GUIDER also improves over CRPO, MRPO, and FaithMed on the out-of-domain benchmarks AMEGA-LLM, RealMedQA, and CancerGUIDE with Qwen3-14B and Gemma4-12B backbones.</p>
+        </div>
       </div>
     </section>
 
