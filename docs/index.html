@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,500;6..72,600&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
   <header class="nav-wrap">
@@ -113,6 +113,50 @@
         <article><span>2</span><h3>Aggregate</h3><p>Score-weighted Monte Carlo aggregation rewards agreement across valid alternatives instead of one oracle trajectory.</p></article>
         <article><span>3</span><h3>Gate</h3><p>Process credit is granted only when the policy’s final answer is correct, bridging process validity and clinical outcome.</p></article>
         <article><span>4</span><h3>Optimize jointly</h3><p>The supervision evolves with the policy, while the policy never observes controller flows or guidelines at inference.</p></article>
+      </div>
+
+      <div class="clinical-example" aria-labelledby="clinical-example-title">
+        <div class="example-heading">
+          <div>
+            <p class="kicker">Clinical illustration</p>
+            <h2 id="clinical-example-title">From patient presentation to a guideline-consistent decision.</h2>
+          </div>
+          <p>GUIDER recovers the clinically relevant decision states and reaches the correct recommendation without reproducing the reference flow word for word.</p>
+        </div>
+
+        <div class="example-board">
+          <article class="case-card">
+            <div class="card-label"><span>01</span> Patient case</div>
+            <p>A 72-year-old woman with extensive-stage small-cell lung cancer initially responded to cisplatin/etoposide but relapsed after six months. Second-line topotecan also failed after four months. She now has progressive fatigue, weight loss, dyspnea, new liver and bone metastases, worsening liver function, and ECOG performance status 3.</p>
+            <h3>What treatment option should be considered?</h3>
+            <ol class="answer-options" type="A">
+              <li class="correct">Palliative and best supportive care, with consideration of single-agent chemotherapy or palliative radiotherapy</li>
+              <li>Continue systemic therapy</li>
+              <li>Clinical trial</li>
+              <li>Continued surveillance</li>
+              <li>Palliative and best supportive care</li>
+              <li>Palliative/supportive care with possible chemotherapy, targeted therapy, or radiotherapy</li>
+              <li>Adjuvant therapy</li>
+            </ol>
+          </article>
+
+          <div class="reasoning-panel">
+            <article class="guideline-card">
+              <div class="card-label"><span>02</span> Gold guideline recommendation</div>
+              <p>Poor performance status. Palliative and best supportive care ± single-agent chemotherapy/palliative radiotherapy.</p>
+            </article>
+
+            <article class="flow-card">
+              <div class="card-label"><span>03</span> Generated decision flow</div>
+              <div class="flow-node"><b>1</b><span>Relapse or primary progressive disease after systemic therapy for ES-SCLC</span></div>
+              <div class="flow-arrow" aria-hidden="true">↓</div>
+              <div class="flow-node"><b>2</b><span>Poor performance status <small>ECOG PS 3</small></span></div>
+              <div class="flow-arrow" aria-hidden="true">↓</div>
+              <div class="final-answer"><span>Final answer</span><strong>A</strong><p>Palliative and best supportive care, with consideration of single-agent chemotherapy or palliative radiotherapy.</p></div>
+            </article>
+          </div>
+        </div>
+        <p class="example-caption"><strong>Example clinical question and generated decision flow from MedGUIDE.</strong> The generated flow identifies the relevant guideline conditions and arrives at the correct treatment recommendation as a concise sequence of decision states.</p>
       </div>
     </section>
 

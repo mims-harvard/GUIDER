@@ -83,6 +83,35 @@ img { display: block; max-width: 100%; }
 .steps article > span { display: grid; place-items: center; width: 32px; height: 32px; margin-bottom: 25px; border-radius: 50%; background: var(--mint); font: 500 .78rem var(--mono); }
 .steps p { font-size: .88rem; }
 
+.clinical-example { margin-top: 112px; padding-top: 88px; border-top: 1px solid var(--line); }
+.example-heading { display: grid; grid-template-columns: 1.2fr .8fr; align-items: end; gap: 80px; margin-bottom: 42px; }
+.example-heading h2 { max-width: 720px; margin: 13px 0 0; font: 600 clamp(2.3rem, 4vw, 4rem)/1.04 var(--serif); letter-spacing: -.025em; }
+.example-heading > p { margin: 0; color: var(--muted); }
+.example-board { display: grid; grid-template-columns: 1.12fr .88fr; gap: 18px; padding: 18px; border: 1px solid var(--line); border-radius: 12px; background: #eef1eb; }
+.case-card, .guideline-card, .flow-card { border: 1px solid var(--line); border-radius: 8px; background: var(--white); }
+.case-card { padding: 28px; }
+.card-label { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; color: var(--green); font: 500 .72rem var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.card-label span { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; color: var(--ink); background: var(--mint); font-size: .67rem; }
+.case-card > p { color: #43514e; }
+.case-card h3 { margin: 24px 0 14px; font-size: 1rem; }
+.answer-options { margin: 0; padding-left: 2.2rem; color: var(--muted); font-size: .78rem; line-height: 1.45; }
+.answer-options li { margin-bottom: 7px; padding: 6px 9px; border-radius: 4px; }
+.answer-options .correct { color: var(--ink); background: rgba(188,235,213,.55); font-weight: 600; }
+.answer-options .correct::marker { color: var(--green); font-weight: 700; }
+.reasoning-panel { display: grid; grid-template-rows: auto 1fr; gap: 18px; }
+.guideline-card, .flow-card { padding: 28px; }
+.guideline-card p { margin: 0; color: #32433f; font: 600 1.06rem/1.55 var(--serif); }
+.flow-card { display: flex; flex-direction: column; }
+.flow-node { display: grid; grid-template-columns: 34px 1fr; align-items: center; gap: 13px; padding: 15px; border: 1px solid #9ebfb3; border-radius: 7px; background: #f5fbf8; font-size: .84rem; line-height: 1.45; }
+.flow-node b { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; color: white; background: var(--green); font: 500 .74rem var(--mono); }
+.flow-node small { display: block; color: var(--green); font-weight: 700; }
+.flow-arrow { height: 30px; color: var(--green); text-align: center; font-size: 1.2rem; line-height: 30px; }
+.final-answer { display: grid; grid-template-columns: auto 42px 1fr; align-items: center; gap: 12px; margin-top: 2px; padding: 15px; border-radius: 7px; color: white; background: var(--green); }
+.final-answer span { font: 500 .68rem var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+.final-answer strong { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; color: var(--green); background: var(--lime); font: 700 1.15rem var(--sans); }
+.final-answer p { margin: 0; font-size: .76rem; line-height: 1.4; }
+.example-caption { margin: 16px 18px 0; color: var(--muted); font-size: .78rem; }
+
 .result-heading { display: grid; grid-template-columns: 1.2fr .8fr; align-items: end; gap: 90px; margin-bottom: 52px; }
 .result-heading > p { margin: 0; color: var(--muted); }
 .scoreboard { border-top: 2px solid var(--ink); }
@@ -120,7 +149,11 @@ footer strong { color: white; letter-spacing: .1em; }
   .hero-stats { grid-template-columns: 1fr 1fr; }
   .hero-stats article:nth-child(2) { border-right: 0; }
   .hero-stats article:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
-  .split, .abstract-grid, .result-heading, .takeaway-grid, .citation-grid { grid-template-columns: 1fr; gap: 44px; }
+  .split, .abstract-grid, .result-heading, .takeaway-grid, .citation-grid, .example-heading, .example-board { grid-template-columns: 1fr; gap: 44px; }
+  .example-board { gap: 18px; padding: 12px; }
+  .clinical-example { margin-top: 80px; padding-top: 70px; }
+  .final-answer { grid-template-columns: auto 42px; }
+  .final-answer p { grid-column: 1 / -1; }
   .steps { grid-template-columns: 1fr 1fr; }
   .steps article:nth-child(2) { border-right: 0; }
   .steps article:nth-child(-n+2) { padding-bottom: 30px; border-bottom: 1px solid var(--line); }
