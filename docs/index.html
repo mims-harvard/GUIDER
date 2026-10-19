@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="GUIDER learns guideline-adherent clinical reasoning with latent decision-flow rewards.">
-  <meta property="og:title" content="GUIDER — Latent Decision Flow Rewards for Clinical Guideline Reasoning">
-  <meta property="og:description" content="Joint controller–policy optimization for accurate, guideline-adherent clinical reasoning.">
+  <meta name="description" content="GUIDER uses latent decision flow rewards to learn clinical reasoning that follows guidelines.">
+  <meta property="og:title" content="GUIDER: Latent Decision Flow Rewards for Clinical Guideline Reasoning">
+  <meta property="og:description" content="Joint controller–policy optimization supports accurate clinical reasoning that follows guidelines.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="assets/method.png?v=2f20669">
-  <title>GUIDER — Clinical Guideline Reasoning</title>
+  <title>GUIDER: Clinical Guideline Reasoning</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,500;6..72,600&amp;display=swap" rel="stylesheet">
@@ -44,7 +44,7 @@
             <a class="button secondary" href="https://github.com/mims-harvard/GUIDER">Code</a>
             <a class="button secondary" href="#citation">BibTeX</a>
           </div>
-          <p class="dek">Clinical guidelines encode evidence-based recommendations as conditional decision flows. GUIDER learns to use these flows as process supervision for accurate, guideline-adherent clinical reasoning—without requiring guidelines at inference time.</p>
+          <p class="dek">Clinical guidelines encode evidence-based recommendations as conditional decision flows. GUIDER uses these flows to supervise accurate clinical reasoning that follows guidelines. It does not require guidelines during inference.</p>
         </div>
         <figure class="hero-figure">
           <img src="assets/method.png?v=2f20669" alt="Overview of the GUIDER controller-policy training framework">
@@ -64,12 +64,12 @@
       <div class="section-shell abstract-grid">
         <div>
           <p class="kicker">Abstract</p>
-          <h2>Learning guideline-adherent reasoning from latent decision flows.</h2>
+          <h2>Learning to follow clinical guidelines from latent decision flows.</h2>
         </div>
         <div class="abstract-copy">
-          <p>Clinical practice guidelines encode evidence-based recommendations as conditional decision flows, which makes them a natural source of process supervision for training language models. Using this supervision is difficult for two reasons. A decision flow consistent with a guideline does not by itself determine the correct answer for a given patient, which we refer to as the <em>path–answer gap</em>, and several valid decision flows can support the same clinical decision, which we refer to as <em>path multiplicity</em>. Under these conditions, answer rewards provide no signal about the decision process, supervised training on annotated flows constrains the model to a single trajectory and reduces answer accuracy, and process rewards computed against one reference flow penalize alternative valid reasoning.</p>
-          <p>We introduce <strong>GUIDER</strong>, a joint controller–policy optimization approach that learns guideline-adherent clinical reasoning while accounting for these challenges. The controller learns to generate plausible decision flows from guideline-derived supervision and provides process-level supervision to the policy, while the policy learns to generate clinical reasoning and final decisions. By aggregating process rewards over multiple controller-generated decision flows, GUIDER accounts for path multiplicity, and by gating process rewards on answer correctness, it couples guideline adherence with correct final answers. Joint optimization allows process supervision to evolve with the policy instead of relying on a fixed reference trajectory. The policy is never conditioned on an oracle decision path, so GUIDER requires no access to guidelines at inference time.</p>
-          <p>On MedGUIDE, GUIDER with Qwen3-14B achieves 82.5 weighted accuracy and 73.5 guideline adherence, improving over the strongest clinical reinforcement learning baseline by 3.3 and 3.1 points, respectively. GUIDER also improves over CRPO, MRPO, and FaithMed on the out-of-domain benchmarks AMEGA-LLM, RealMedQA, and CancerGUIDE with Qwen3-14B and Gemma4-12B backbones.</p>
+          <p>Clinical practice guidelines encode evidence-based recommendations as conditional decision flows. These flows provide a natural source of process supervision for language models, but two challenges complicate their use. First, a flow that follows a guideline does not necessarily determine the correct answer for a specific patient. We call this problem the <em>path–answer gap</em>. Second, several valid flows can support the same clinical decision. We call this property <em>path multiplicity</em>. Answer rewards therefore provide no information about the decision process. Supervised training on annotated flows restricts the model to one trajectory and reduces answer accuracy, while process rewards based on one reference flow penalize other valid reasoning paths.</p>
+          <p>We introduce <strong>GUIDER</strong>, which jointly optimizes a controller and a policy to address these challenges. The controller learns from supervision derived from guidelines, generates plausible decision flows, and uses them to supervise the policy. The policy learns to generate clinical reasoning and final decisions. GUIDER accounts for path multiplicity by aggregating process rewards across several flows from the controller. It links adherence to correct outcomes by awarding process rewards only for correct answers. Joint optimization allows the supervision to evolve with the policy instead of relying on a fixed reference trajectory. Because the policy never receives an oracle decision path, GUIDER does not need access to guidelines during inference.</p>
+          <p>On MedGUIDE, GUIDER with Qwen3-14B achieves 82.5 weighted accuracy and 73.5 guideline adherence. These results exceed those of the strongest clinical reinforcement learning baseline by 3.3 and 3.1 points, respectively. With Qwen3-14B and Gemma4-12B backbones, GUIDER also outperforms CRPO, MRPO, and FaithMed on three benchmarks from outside the training domain: AMEGA-LLM, RealMedQA, and CancerGUIDE.</p>
         </div>
       </div>
     </section>
@@ -83,11 +83,11 @@
         <div class="problem-copy">
           <article>
             <span class="index">01</span>
-            <div><h3>Path–answer gap</h3><p>A guideline-consistent decision flow does not necessarily determine the correct patient-specific answer. Process validity and outcome correctness are complementary—not interchangeable.</p></div>
+            <div><h3>Path–answer gap</h3><p>A decision flow that follows a guideline does not necessarily determine the correct answer for a specific patient. Process validity complements outcome correctness, but cannot replace it.</p></div>
           </article>
           <article>
             <span class="index">02</span>
-            <div><h3>Path multiplicity</h3><p>Several clinically valid decision flows can support the same decision. Scoring against one fixed reference path can penalize equally sound alternatives.</p></div>
+            <div><h3>Path multiplicity</h3><p>Several clinically valid decision flows can support the same decision. A score based on one fixed reference path can penalize equally sound alternatives.</p></div>
           </article>
         </div>
       </div>
@@ -100,8 +100,8 @@
     <section class="method section-shell" id="method">
       <div class="section-heading centered">
         <p class="kicker">The approach</p>
-        <h2>Supervise the process. Preserve the policy’s independence.</h2>
-        <p>GUIDER jointly optimizes a decision-flow controller and a clinical reasoning policy. The controller proposes multiple plausible flows; the policy independently generates its own flow and final answer.</p>
+        <h2>Supervise the process while preserving an independent policy.</h2>
+        <p>GUIDER jointly optimizes a decision flow controller and a clinical reasoning policy. The controller proposes several plausible flows. The policy independently generates its own flow and final answer.</p>
       </div>
 
       <div class="method-figure">
@@ -109,10 +109,10 @@
       </div>
 
       <div class="steps">
-        <article><span>1</span><h3>Generate</h3><p>A controller learns from guideline-derived supervision and samples multiple plausible latent decision flows.</p></article>
-        <article><span>2</span><h3>Aggregate</h3><p>Score-weighted Monte Carlo aggregation rewards agreement across valid alternatives instead of one oracle trajectory.</p></article>
-        <article><span>3</span><h3>Gate</h3><p>Process credit is granted only when the policy’s final answer is correct, bridging process validity and clinical outcome.</p></article>
-        <article><span>4</span><h3>Optimize jointly</h3><p>The supervision evolves with the policy, while the policy never observes controller flows or guidelines at inference.</p></article>
+        <article><span>1</span><h3>Generate</h3><p>A controller learns from supervision derived from guidelines and samples several plausible latent decision flows.</p></article>
+        <article><span>2</span><h3>Aggregate</h3><p>Monte Carlo aggregation weights flows by their scores and rewards agreement across valid alternatives rather than agreement with one oracle trajectory.</p></article>
+        <article><span>3</span><h3>Gate</h3><p>GUIDER grants process credit only when the policy produces the correct final answer, thereby linking process validity to the clinical outcome.</p></article>
+        <article><span>4</span><h3>Optimize jointly</h3><p>The supervision evolves with the policy, but the policy never observes controller flows or guidelines during inference.</p></article>
       </div>
 
       <div class="clinical-example" aria-labelledby="clinical-example-title">
@@ -121,7 +121,7 @@
             <p class="kicker">Clinical illustration</p>
             <h2 id="clinical-example-title">From patient presentation to a guideline-consistent decision.</h2>
           </div>
-          <p>GUIDER recovers the clinically relevant decision states and reaches the correct recommendation without reproducing the reference flow word for word.</p>
+          <p>GUIDER identifies the clinically relevant decision states and reaches the correct recommendation without reproducing the reference flow word for word.</p>
         </div>
 
         <div class="example-board">
@@ -165,7 +165,7 @@
             <p class="kicker">Open-ended illustration</p>
             <h2 id="amega-example-title">Reasoning without predefined answer choices.</h2>
           </div>
-          <p>AMEGA-LLM evaluates free-form clinical answers. The model must identify patient-specific factors and compose the final response directly.</p>
+          <p>AMEGA-LLM evaluates responses to open clinical questions. The model must identify factors specific to the patient and compose the final response directly.</p>
         </div>
 
         <div class="amega-board">
@@ -196,14 +196,14 @@
             </div>
           </article>
         </div>
-        <p class="example-caption"><strong>Example open-ended clinical reasoning question and model response from AMEGA-LLM.</strong> Unlike MedGUIDE, AMEGA-LLM has no predefined answer choices. The generated clinical reasoning therefore forms the final response rather than a separate decision flow and multiple-choice answer.</p>
+        <p class="example-caption"><strong>Example clinical reasoning question and model response from AMEGA-LLM.</strong> Unlike MedGUIDE, AMEGA-LLM provides no predefined answer choices. The model therefore presents its clinical reasoning as the final response rather than as a separate decision flow and multiple-choice answer.</p>
       </div>
     </section>
 
     <section class="results band" id="results">
       <div class="section-shell">
         <div class="section-heading result-heading">
-          <div><p class="kicker">Evaluation</p><h2>Stronger reasoning in domain—and beyond it.</h2></div>
+          <div><p class="kicker">Evaluation</p><h2>Stronger reasoning within and beyond the training domain.</h2></div>
           <p>Across two model families, GUIDER improves both answer accuracy and guideline adherence over CRPO, FaithMed, and MRPO.</p>
         </div>
 
@@ -215,14 +215,14 @@
           <div class="score-row"><span><b>RealMedQA</b><small>Judge score</small></span><strong>1.9</strong><span>1.8</span><em>+0.1</em></div>
           <div class="score-row"><span><b>CancerGUIDE</b><small>Judge score</small></span><strong>2.4</strong><span>2.3</span><em>+0.1</em></div>
         </div>
-        <p class="table-note">Qwen3-14B results. Fine-tuned methods are averaged over three random seeds; higher is better.</p>
+        <p class="table-note">Qwen3-14B results. We report the mean of three random seeds for each fine-tuned method. Higher values indicate better performance.</p>
       </div>
     </section>
 
     <section class="takeaways section-shell">
       <p class="kicker">What we learn</p>
       <div class="takeaway-grid">
-        <h2>Clinical guidelines can provide rich process supervision without becoming an inference-time dependency.</h2>
+        <h2>Clinical guidelines can provide rich process supervision without creating a dependency during inference.</h2>
         <ul>
           <li>Multiple sampled flows capture useful path diversity; gains largely saturate at four flows.</li>
           <li>Moderately sized decision flows offer enough structure without unnecessary complexity.</li>
