@@ -1,9 +1,25 @@
-# GUIDER: Joint Controller--Policy optimization
+# GUIDER: Latent Decision Flow Rewards for Clinical Guideline Reasoning
 
-Minimal, anonymous implementation of joint controller supervision and
+Official implementation of joint controller supervision and
 Monte-Carlo flow-credit GRPO for
 guideline decision-flow data. The repository contains only training and
 evaluation code; it does not include data or model weights.
+
+Paper: [Latent Decision Flow Rewards for Clinical Guideline Reasoning](https://arxiv.org/abs/2610.38709)
+
+## Citation
+
+```bibtex
+@misc{bhatt2026latentdecisionflowrewardsclinical,
+  title         = {Latent Decision Flow Rewards for Clinical Guideline Reasoning},
+  author        = {Gaurav Bhatt and Marinka Zitnik},
+  year          = {2026},
+  eprint        = {2610.38709},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG},
+  url           = {https://arxiv.org/abs/2610.38709}
+}
+```
 
 Use Python 3.10+ with `torch`, `transformers`, `datasets`, `peft`,
 `bitsandbytes`, and `trl` installed.
